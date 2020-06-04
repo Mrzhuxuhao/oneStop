@@ -7,6 +7,13 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+//highchart相关
+import Highchart from "highcharts/highcharts";
+import HighchartsVue from "highcharts-vue";
+import stockInit from "highcharts/modules/stock";
+stockInit(Highchart);
+Vue.use(HighchartsVue);
+
 import '@/assets/styles/reset.css'
 
 Vue.config.productionTip = false
