@@ -1,96 +1,108 @@
 <template>
-  <div>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="选择年度">
-        <el-col :span="4">
-          <el-date-picker size="small" type="year" placeholder="选择起始年份" v-model="form.beginYear" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="4">
-          <el-date-picker size="small" type="year" placeholder="选择结束年份" v-model="form.endYear" style="width: 100%;"></el-date-picker>
-        </el-col>
-      </el-form-item>
-    </el-form>
-    <highcharts :options="chartOptions" :callback="myCallback"></highcharts>
+  <div id="mapId1">
   </div>
 </template>
 
 <script>
+import Highchart from "highcharts/highcharts";
+import mapData from '../../components/map/chiana'
+let date = [{'name': '北京', 'value': 5}, {'name': '天津', 'value': 4}, {'name': '河北', 'value': 3}, {
+
+    'name': '山西',
+
+    'value': 1
+
+  }, {'name': '内蒙古', 'value': 2}, {'name': '辽宁', 'value': 3}, {'name': '吉林', 'value': 3}, {
+
+    'name': '黑龙江',
+
+    'value': 2
+
+  }, {'name': '上海', 'value': 5}, {'name': '江苏', 'value': 4}, {'name': '浙江', 'value': 4}, {
+
+    'name': '安徽',
+
+    'value': 1
+
+  }, {'name': '福建', 'value': 1}, {'name': '江西', 'value': 5}, {'name': '山东', 'value': 2}, {
+
+    'name': '河南',
+
+    'value': 1
+
+  }, {'name': '湖北', 'value': 2}, {'name': '湖南', 'value': 3}, {'name': '广东', 'value': 5}, {
+
+    'name': '广西',
+
+    'value': 4
+
+  }, {'name': '海南', 'value': 6}, {'name': '重庆', 'value': 3}, {'name': '四川', 'value': 5}, {
+
+    'name': '贵州',
+
+    'value': 4
+
+  }, {'name': '云南', 'value': 4}, {'name': '西藏', 'value': 0}, {'name': '陕西', 'value': 1}, {
+
+    'name': '甘肃',
+
+    'value': 2
+
+  }, {'name': '青海', 'value': 4}, {'name': '宁夏', 'value': 2}, {'name': '新疆', 'value': 5}, {
+
+    'name': '台湾',
+
+    'value': 1
+
+  }, {'name': '香港', 'value': 1}, {'name': '澳门', 'value': 4}, {'name': '南海诸岛', 'value': 5}, {
+
+    'name': '南海诸岛',
+
+    'value': 5
+
+  }];
   export default {
-    name: "HelloWorld",
-    data() {
-      return {
-        form:{
-          beginYear:'',
-          endYear:'',
-        },
-        chartOptions: {
-          chart: {
-            type: 'bar',
-            options3d: {
-              enabled: true,
-              alpha: 1,
-              beta: 1,
-              depth: 50,
-              viewDistance: 25
-            }
-          },
-          title: {
-            text: '国内各地区供应商数量分布情况'
-          },
-          subtitle: {
-            text: ''
-          },
-          xAxis: {
-            categories: ['北京', '上海', '天津', '内蒙古', '河北'],
-            title: {
-              text: ''
-            }
-          },
-          yAxis: {
+   name:'HelloWorld',
+   mounted:function(){
+     console.log(Highchart)
+     this.showChina()
+   },
+   methods:{
+     showChina(){
+       var map = new Highchart.Map('mapId1',{
+         title:{
+           text:'中国'
+         },
+         colorAxis: {
+           stops:[
+             [0,'#c4463a'],
+             [1,'#fffbbc'],
+             [1.5,'#006cee']
+           ],
             min: 0,
-            title: {
-              text: ' (家)',
-              align: 'high'
-            },
-            labels: {
-              overflow: 'justify'
+            max:5
+        },
+        series: [{
+            data: date,
+            mapData: mapData,
+            joinBy: 'name',
+            name: '中国地图',
+            dataLabels:{
+              enabled:true,
+              color:'red',
+              format:'{point.properties.fullname}',
+              zIndex:'999'
             }
-          },
-          tooltip: {
-            valueSuffix: ' 家'
-          },
-          plotOptions: {
-            bar: {
-              dataLabels: {
-                enabled: true,
-                allowOverlap: true // 允许数据标签重叠
-              }
-            }
-          },
-          legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -40,
-            y: 100,
-            floating: true,
-            borderWidth: 1,
-            shadow: true
-          },
-          series: [{
-            name: '2016-2020',
-            data: [107, 31, 635, 203, 2]
-          }]
+        }],
+        tooltip:{
+          userHtml:true,
+          headerFormat:'<table><tr><td>{point.name}</td></tr>',
+          pointFormat:'<tr><td>城市:</td><td>{point.properties.fullname}</td></tr>',
+          footerFormat:'</table>'
         }
-      };
-    },
-    mounted() {},
-    methods: {
-      myCallback() {
-        console.log("this is callback function");
-      }
-    }
+       })
+     }
+   }
   };
 </script>
 
