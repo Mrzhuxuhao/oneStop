@@ -49,7 +49,11 @@
           </div>
         </div>
         <div class="mainContent">
-          <router-view></router-view>
+          <el-container>
+            <el-main>
+              <router-view></router-view>
+            </el-main>
+          </el-container>
         </div>
       </div>
     </div>
