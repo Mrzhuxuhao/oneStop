@@ -9,9 +9,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 //highchart相关
 import Highchart from "highcharts/highcharts";
+import highcharts3d from 'highcharts/highcharts-3d';
 import HighchartsVue from "highcharts-vue";
 import stockInit from "highcharts/modules/stock";
 stockInit(Highchart);
+highcharts3d(Highchart);
 Vue.use(HighchartsVue);
 
 import '@/assets/styles/reset.css'
